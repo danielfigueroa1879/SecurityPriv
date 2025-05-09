@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tramitar Credencial Empresa e Independiente - OS10</title> <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Base Optimizados */
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            margin: 0;
+            padding: 20px;
+            color: #1f2937;
+            line-height: 1.6; /* Ligeramente aumentado para legibilidad */
+            font-size: 16px;
+            /* Imagen de fondo - Asegúrate que '101.jpg' esté en la ruta correcta */
+            background-image: url("101.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Considerar impacto en rendimiento móvil */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Transiciones suaves */
+        }
+        /* Capa semitransparente para mejorar legibilidad del contenido */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.65); /* Aumentada opacidad para mejor contraste */
+            z-index: -1; /* Detrás del contenido */
+        }
+
+        .text-sm, p, li, td { /* Consistencia en tamaño y peso */
+            font-weight: 400;
+            font-size: 1rem; /* Base de 16px */
+        }
+
+        /* Contenedor Principal */
+        .card-container {
+            max-width: 950px;
+            margin: 40px auto; /* Más margen superior */
+            padding: 25px; /* Padding ligeramente aumentado */
+            background-color: #FFFFF0; /* Un marfil muy claro, ligeramente diferente al index */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes slideUp { /* Misma animación que index.html */
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Header y Logo */
+        .header-container { /* No usado directamente, pero estilos relacionados */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo-os10 {
+            position: absolute;
+            top: 20px; /* Consistente con index.html */
+            left: 20px;
+            width: 70px; /* Tamaño específico para esta página */
+            height: auto;
+            opacity: 0.6; /* Ligeramente más sutil */
+            transition: opacity 0.3s ease;
+        }
+        .logo-os10:hover { opacity: 1; }
+
+        /* Títulos */
+        .title-container { text-align: center; margin-top: 1rem; line-height: 1; margin-bottom: 25px; }
+        .main-title, .main-subtitle { color: #DAA520; /* Dorado más oscuro */ font-weight: bold; display: block; text-align: center; padding: 0; margin: 0; text-shadow: 0 1px 3px rgba(218, 165, 32, 0.3); transition: all 0.3s ease; }
+        .main-title { font-size: 1.9rem; margin-bottom: -0.2rem; transform: translateX(-2px); }
+        .main-subtitle { font-size: 1.6rem; margin-top: -0.15rem; transform: translateX(8px); }
+        .title-container:hover .main-title, .title-container:hover .main-subtitle { text-shadow: 0 2px 5px rgba(218, 165, 32, 0.4); }
+
+        h3 { font-weight: 600; font-size: 1.5rem; color: #BF5700; /* Naranja quemado para H3 */ margin-bottom: 1rem; }
+        h4 { font-weight: 600; font-size: 1.2rem !important; margin-bottom: 0.8rem !important; color: #333; }
+
+        .content-container { margin-top: 30px; }
+
+        /* Estilos de Botones */
+        .download-btn {
+            transition: all 0.3s ease;
+            margin: 12px 0; /* Espaciado vertical reducido */
+            padding: 12px 20px; /* Padding ajustado */
+            width: auto; /* Ancho automático basado en contenido */
+            min-width: 200px; /* Ancho mínimo */
+            display: inline-block;
+            text-align: left !important;
+            padding-left: 20px !important;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.15);
+            border-radius: 7px !important;
+            font-size: 1rem !important;
+            font-weight: 600; /* Ligeramente menos bold que index */
+            color: white;
+        }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+        
+        /* Colores y sombras específicas de botones */
+        .download-btn.bg-yellow-500 { background-color: #F59E0B; box-shadow: 0 3px 6px rgba(245, 158, 11, 0.3); }
+        .download-btn.bg-yellow-500:hover { background-color: #D97706; box-shadow: 0 5px 10px rgba(245, 158, 11, 0.4); }
+        .download-btn.bg-blue-500 { background-color: #3B82F6; box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3); }
+        .download-btn.bg-blue-500:hover { background-color: #2563EB; box-shadow: 0 5px 10px rgba(59, 130, 246, 0.4); }
+        
+        /* Botón de Volver */
+        .back-btn {
+            position: absolute; top: 20px; right: 20px; padding: 10px 14px; border-radius: 7px;
+            transition: all 0.3s ease; font-size: 0.95rem; z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; text-decoration: none;
+            background-color: #F59E0B; color: white; font-weight: bold;
+        }
+        .back-btn:hover { background-color: #D97706; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .back-btn svg { margin-right: 6px; height: 20px; width: 20px; }
+
+        /* Imágenes y Miniaturas */
+        .qr-code-footer { width: 70px; height: 70px; transition: all 0.3s ease; border-radius: 6px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); background-color: white; padding: 4px; }
+        .photo-example, .valores-example { transition: transform 0.3s ease; cursor: zoom-in; border: 1px solid #FFD700; margin-bottom: 10px; max-width: 100%; border-radius: 4px; }
+        .photo-example:hover { transform: scale(1.15); z-index: 1000; box-shadow: 0 0 12px rgba(0,0,0,0.25); }
+        .valores-example:hover { transform: scale(1.3); z-index: 1000; box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+
+        /* Estilos de Tabla */
+        .table-container { overflow-x: auto; margin-top: 20px; margin-bottom: 20px; scrollbar-width: thin; position: relative; }
+        .responsive-table { width: 100%; border-collapse: collapse; }
+        .responsive-table th, .responsive-table td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9rem; white-space: nowrap; }
+        .responsive-table th { background-color: #f9fafb; position: sticky; top: 0; z-index: 5; } /* Menor z-index que imágenes hover */
+        .cargo-select, .color-select { /* Estilos de selectores */
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1em;
+            padding-right: 2rem; font-size: 0.9rem; cursor: pointer; border-radius: 4px; padding: 6px 8px;
+        }
+        
+        .border-l-4 { border-color: #FFBF00 !important; /* Dorado más brillante para borde */ padding-left: 1rem; }
+        .border-l-4:hover { border-color: #FFA500 !important; /* Naranja en hover */ }
+        
+        /* Footer */
+        .footer-text span { font-size: 0.85rem; }
+
+        /* Media Queries - Móvil */
+        @media (max-width: 768px) { /* Punto de quiebre un poco más grande para tabletas */
+            body { padding: 15px; font-size: 15px; }
+            .card-container { padding: 20px; margin: 20px auto; max-width: 95%; }
+            .main-title { font-size: 1.6rem; } .main-subtitle { font-size: 1.4rem; }
+            h3 { font-size: 1.3rem; } h4 { font-size: 1.1rem !important; }
+            .logo-os10 { width: 55px; top: 15px; left: 15px; }
+            .download-btn, .download-btn.dpi-btn { width: 100% !important; max-width: 280px; margin: 10px auto !important; text-align: center !important; padding-left: 15px !important; padding-right: 15px !important; }
+            .photo-example { width: 60% !important; margin: 10px auto !important; display: block; }
+            .qr-code-footer { width: 60px; height: 60px; margin-top: 10px !important; /* Ajustar si es necesario */ }
+            .back-btn { top: auto; bottom: 15px; right: 15px; padding: 12px; border-radius: 50%; width: 50px; height: 50px; }
+            .back-btn .btn-text { display: none; } .back-btn svg { margin-right: 0; }
+            .table-container::after { content: '← Desplaza para ver más →'; display: block; text-align: center; font-size: 0.8rem; color: #6b7280; margin-top: 8px; }
+        }
+        @media (max-width: 480px) { /* Pantallas muy pequeñas */
+            body { padding: 10px; }
+            .card-container { padding: 15px; }
+            .main-title { font-size: 1.4rem; } .main-subtitle { font-size: 1.2rem; }
+            h3 { font-size: 1.2rem; } h4 { font-size: 1rem !important; }
+             .footer-text span { font-size: 0.75rem; }
+        }
+
+        /* Modo Oscuro */
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #1a202c; color: #cbd5e0; } /* Azul noche oscuro */
+            body::before { background-color: rgba(26, 32, 44, 0.7); } /* Capa oscura */
+            .card-container { background-color: #2d3748; color: #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+            .logo-os10 { opacity: 0.8; }
+            .main-title, .main-subtitle { color: #F6E05E; /* Amarillo pálido */ text-shadow: 0 1px 3px rgba(246, 224, 94, 0.2); }
+            h3 { color: #FFA500; } /* Naranja para H3 */
+            h4 { color: #e5e7eb; }
+            .download-btn.bg-yellow-500 { background-color: #ECC94B; box-shadow: 0 3px 6px rgba(236, 201, 75, 0.3); color: #1A202C; }
+            .download-btn.bg-yellow-500:hover { background-color: #D69E2E; box-shadow: 0 5px 10px rgba(236, 201, 75, 0.4); }
+            .download-btn.bg-blue-500 { background-color: #4299E1; box-shadow: 0 3px 6px rgba(66, 153, 225, 0.3); }
+            .download-btn.bg-blue-500:hover { background-color: #3182CE; box-shadow: 0 5px 10px rgba(66, 153, 225, 0.4); }
+            .back-btn { background-color: #ECC94B; color: #1A202C; }
+            .back-btn:hover { background-color: #D69E2E; }
+            .responsive-table th { background-color: #2d3748; color: #e2e8f0; border-color: #4a5568; }
+            .responsive-table td { border-color: #4a5568; }
+            .cargo-select, .color-select { background-color: #4a5568; color: #e2e8f0; border-color: #718096; }
+            .border-l-4 { border-color: #ECC94B !important; }
+            .footer-text span, .footer-text li { color: #a0aec0 !important; }
+        }
+        
+        /* Animación de pulso para botón volver (igual que index) */
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .pulse-animation { animation: pulse 1s ease-in-out; }
+        
+        /* Animación de rebote para botón (igual que index) */
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        .bounce-animation { animation: bounce 2s ease infinite !important; }
+
+    </style>
+</head>
+<body class="text-gray-800">
+    <div class="card-container bg-white rounded-xl shadow-md relative">
+        <a href="https://www.zosepcar.cl/OS10.php" target="_blank" rel="noopener">
+           <img src="logo-os.png" 
+                 alt="Logo OS10 Carabineros de Chile" 
+                 class="logo-os10"
+                 width="70" height="70"> </a>
+        
+        <a href="index_optimized.html" class="back-btn"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            <span class="btn-text">Volver</span>
+        </a>
+        
+        <header class="title-container">
+            <h1 class="main-title">CREDENCIAL</h1>
+            <h2 class="main-subtitle">EMPRESA E INDEPENDIENTE</h2>
+        </header>
+        
+        <main class="content-container">
+            <section class="border-l-4 border-yellow-500 pl-4 mb-6">
+                <h3>REQUISITOS PARA SOLICITUD</h3>
+                <div class="space-y-6"> <article>
+                        <h4 class="font-semibold">Documentos requeridos:</h4>
+                        <ul class="list-disc pl-5 text-sm space-y-1">
+                            <li>01 Solicitud simple o carta conductora para credencial Independiente o Empresa.
+                                <a href="https://d6.short.gy/bv" target="_blank" rel="noopener" class="download-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded mt-2 mb-3">
+                                    Descargar Solicitud
+                                </a>
+                            </li>
+                            <li>Fotocopia de cédula de identidad (ambas caras).</li>
+                            <li>Certificado OS.10 (Curso Aprobado Vigente).</li>
+                            <li>Certificado de Antecedentes para Fines Especiales.</li>
+                        </ul>
+                    </article>
+                    
+                    <article>
+                        <h4 class="font-semibold">Fotografía digital:</h4>
+                        <ul class="list-disc pl-5 text-sm space-y-1">
+                            <li>Formato JPG, 331x413 píxeles, fondo blanco.</li>
+                            <li>Resolución 300 DPI, desde los hombros hacia arriba.</li>
+                            <li>Camisa negra (tela gruesa/delgada, manga corta/larga).</li>
+                            <li>Fotografía almacenada en un Pendrive.</li>
+                            <li class="mt-3">
+                                <img src="foto.jpg" 
+                                     alt="Ejemplo de Fotografía para credencial OS10" 
+                                     class="photo-example w-2/3 md:w-1/3 mb-2 ml-0 rounded" 
+                                     style="display: block;"
+                                     width="331" height="413"> </li>
+                            <li class="flex flex-col space-y-2 mt-2">
+                                <a href="https://dal5.short.gy/0" target="_blank" rel="noopener" class="download-btn dpi-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded">
+                                    1. Convertir a 300 DPI
+                                </a>
+                                <a href="https://dal5.short.gy/j" target="_blank" rel="noopener" class="download-btn dpi-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded">
+                                    2. Convertir a 300 DPI (Alternativa)
+                                </a>
+                                <p class="text-xs italic mt-1">Utilice estas herramientas para modificar los DPI/PPP de su imagen si es necesario.</p>
+                            </li>
+                        </ul>
+                    </article>
+                    
+                    <article>
+                        <h4 class="font-semibold">Formato Excel (Datos de Agentes):</h4>
+                        <ul class="list-disc pl-5 text-sm space-y-1">
+                            <li>Nombre del archivo: RUT del agente sin puntos, guión medio y dígito verificador (ej: 12345678-9.xlsx).</li>
+                            <li>Estructura obligatoria: <strong>FORMATO ESTÁNDAR DE EXCEL PARA EMPRESAS</strong>.</li>
+                        </ul>
+                        <div class="table-container mt-3">
+                            <table class="responsive-table">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th>AF</th><th>RUN</th><th>NOMBRES</th><th>APELLIDOS</th><th>CARGO</th>
+                                        <th>EMPRESA</th><th>VIGENCIA</th><th>OBS-COLOR CRED.</th><th>OTROS</th><th>EMAIL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>COQUIMBO</td><td>12345678-9</td><td>CAMILA GRACIELA</td><td>LEYTON MONTENEGRO</td>
+                                        <td>
+                                            <select class="cargo-select bg-white border rounded px-2 py-1 text-sm w-full">
+                                                <option selected>GUARDIA DE SEGURIDAD</option> <option>CONSERJE</option> <option>VIGILANTE PRIVADO</option> </select>
+                                        </td>
+                                        <td>ALTA SEGURIDAD S.A.</td><td>31-10-2027</td>
+                                        <td>
+                                            <select class="color-select bg-white border rounded px-2 py-1 text-sm w-full">
+                                                <option selected>BLANCO</option> <option>AZUL</option> <option>GRIS</option>
+                                            </select>
+                                        </td>
+                                        <td>N/A</td><td>c.leyton@example.com</td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                        <div class="flex flex-wrap justify-start items-center pl-5 mt-2">
+                            <a href="https://dal5.short.gy/Cr3d" target="_blank" rel="noopener" class="download-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded excel-btn">
+                                Descargar Plantilla Excel
+                            </a>
+                        </div>
+                        
+                        <h4 class="font-semibold mt-6 mb-1">
+                          <span style="color: #BF5700;" class="text-xl">CREDENCIAL INDEPENDIENTE</span>
+                        </h4>
+                        <div class="flex flex-wrap justify-start items-center pl-5">
+                            <a href="https://dal5.short.gy/Ind" target="_blank" rel="noopener" class="download-btn bg-blue-500 hover:bg-blue-600 text-white font-bold rounded mt-1 indep-btn">
+                               Formato C. Independiente
+                            </a>
+                        </div>
+                    </article>
+
+                    <article>
+                        <h4 class="font-semibold">PAGO VALE VISTA:</h4>
+                        <ul class="list-disc pl-5 text-sm space-y-1">
+                            <li>Monto: $5.763 CLP.</li>
+                            <li>A nombre de: <strong>ZONA DE CARABINEROS SEGURIDAD PRIVADA CONTROL DE ARMAS Y EXPLOSIVOS</strong></li>
+                            <li>R.U.T.: 61.944.800-6</li>
+                            <li>Teléfono OS.10: +562512651024 (Consultar vigencia del número)</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="mt-8 flex flex-wrap justify-between items-start md:items-center">
+                    <img src="https://placehold.co/300x150/E2E8F0/333333?text=Ejemplo+Valores+Pago"
+                         alt="Ejemplo de Vale Vista o Comprobante de Pago" 
+                         class="valores-example w-full md:w-2/5 mb-4 md:mb-0 rounded"
+                         width="300" height="150">
+                    
+                    <a href="https://dal5.short.gy/C√" target="_blank" rel="noopener" class="block mt-4 md:mt-0">
+                       <img src="https://raw.githubusercontent.com/danielfigueroa1879/Credenciales/ef0b1d80f2830affe8a2d4095f70a136119cf5a0/qrcred.png"
+                             alt="Código QR para más información sobre pagos" 
+                             class="qr-code-footer mx-auto md:mx-0"
+                             width="70" height="70"
+                             title="Escanea para más información de pagos"> 
+                    </a>
+                </div>
+            </section>
+        </main>  
+        <footer class="text-center text-gray-500 text-sm mt-8 footer-text">
+          <ul class="space-y-1">
+               <li><span>Haga clic en los botones para descargar los formatos correspondientes.</span></li>
+               <li><span>&copy;2025 - Daniel Figueroa Ch.</span></li>
+               <li><span>Ingeniero en Informática.</span></li>
+          </ul>
+       </footer>
+    </div>
+
+    <script defer>
+    // Script optimizado y con 'defer'
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animación para el botón de Credencial Independiente
+        const botonIndependiente = document.querySelector('.indep-btn');
+        if (botonIndependiente) {
+            function toggleBounce() {
+                botonIndependiente.classList.add('bounce-animation');
+                setTimeout(() => { botonIndependiente.classList.remove('bounce-animation'); }, 2000);
+            }
+            setInterval(toggleBounce, 5000); // Activar cada 5 segundos
+            setTimeout(toggleBounce, 3000);  // Primera activación
+        }
+        
+        // Animación para el botón de volver
+        const botonVolver = document.querySelector('.back-btn');
+        if (botonVolver) {
+            setTimeout(() => {
+                botonVolver.classList.add('pulse-animation');
+                setTimeout(() => { botonVolver.classList.remove('pulse-animation'); }, 1000);
+            }, 1500); // Activar después de 1.5s
+        }
+    });
+    </script>
+</body>
+</html>
